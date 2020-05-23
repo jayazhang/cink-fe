@@ -61,9 +61,29 @@ export const constantRouterMap = [
 
 ]
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: '/',
   scrollBehavior: () => ({ y: 0 }),
-  routes: constantRouterMap
+  routes: constantRouterMap,
 })
+
+const paths = [
+  '/user/login',
+  '/user/register'
+]
+
+router.beforeEach(async (to, from, next) => {
+  if (paths.indexOf(to.path) > -1) {
+    next()
+    return
+  }
+  const userInfo = localStorage.getItem('userInfo')
+  if (!userInfo) {
+    next('/user/login')
+  } else {
+    next()
+  }
+})
+
+export default router

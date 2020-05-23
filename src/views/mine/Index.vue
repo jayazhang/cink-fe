@@ -6,7 +6,7 @@
 
     <div class="avatar" v-if="isLogin">
       <img />
-      <div class="name">请登录</div>
+      <div class="name">{{userInfo.nickname}}</div>
     </div>
 
     <div class="login-pane" v-else>
@@ -19,17 +19,23 @@
 export default {
   computed: {
     isLogin() {
-      return false
+      return this.userInfo && this.userInfo.id
     }
   },
   data() {
     return {
-
+      userInfo: {}
     }
   },
   methods: {
     login() {
       this.$router.push({ name: 'login' })
+    },
+  },
+  created() {
+    const userInfo = window.localStorage.getItem('userInfo')
+    if (userInfo) {
+      this.userInfo = JSON.parse(userInfo)
     }
   }
 }

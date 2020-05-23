@@ -12,12 +12,12 @@
           @click="clickHandle(index)"
         >
           <div class="img">
-            <img :src="item.img" />
+            <img :src="item.poster" />
             <div class="radio" :class="{checked: item.checked}">
               <van-icon name="success" />
             </div>
           </div>
-          <div class="desc">{{item.text}}</div>
+          <div class="desc">{{item.name}}</div>
         </van-col>
       </van-row>
     </div>
@@ -35,53 +35,6 @@
 </template>
 
 <script>
-const interestList = [
-  {
-    id: 1,
-    img: require('../../../assets/interest/img1.png'),
-    text: '汇率',
-  },
-  {
-    id: 2,
-    img: require('../../../assets/interest/img2.png'),
-    text: '新闻',
-  },
-  {
-    id: 3,
-    img: require('../../../assets/interest/img3.png'),
-    text: '医疗',
-  },
-  {
-    id: 4,
-    img: require('../../../assets/interest/img4.png'),
-    text: '租房',
-  },
-  {
-    id: 5,
-    img: require('../../../assets/interest/img5.png'),
-    text: '学校',
-  },
-  {
-    id: 6,
-    img: require('../../../assets/interest/img6.png'),
-    text: '求职',
-  },
-  {
-    id: 7,
-    img: require('../../../assets/interest/img7.png'),
-    text: '音乐',
-  },
-  {
-    id: 8,
-    img: require('../../../assets/interest/img8.png'),
-    text: '美食',
-  },
-  {
-    id: 9,
-    img: require('../../../assets/interest/img9.png'),
-    text: '签证',
-  },
-]
 export default {
   computed: {
     checkedLength() {
@@ -93,10 +46,7 @@ export default {
   },
   data() {
     return {
-      interestList: interestList.map(item => {
-        item.checked = false
-        return item
-      }),
+      interestList: [],
     }
   },
   methods: {
@@ -104,8 +54,24 @@ export default {
       this.interestList[index].checked = !this.interestList[index].checked
     },
     nextStep() {
-      this.$router.replace({ name: 'team' })
+      this.$http.post('/api/tags/set', {
+        ids: this.interestList.filter(item => item.checked).map(item => item.id).join(','),
+      }).then(res => {
+        if (res.success) {
+          this.$router.replace({ name: 'team' })
+        } else {
+          alert('error')
+        }
+      });
     }
+  },
+  created() {
+    this.$http.get('/api/tags').then(({ data }) => {
+      this.interestList = data.map(interest => {
+        interest.checked = false
+        return interest
+      })
+    })
   }
 }
 </script>

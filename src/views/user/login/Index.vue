@@ -3,14 +3,14 @@
     <h2>请使用账号密码登录</h2>
     <van-form @submit="onSubmit">
       <van-field
-        v-model="username"
+        v-model="form.username"
         name="username"
         label="username"
         placeholder="please input username"
         :rules="[{ required: true, message: 'please input username' }]"
       />
       <van-field
-        v-model="password"
+        v-model="form.password"
         type="password"
         name="password"
         label="password"
@@ -34,13 +34,25 @@
 export default {
   data() {
     return {
-      username: '',
-      password: ''
+      form: {
+        username: '',
+        password: ''
+      },
     }
   },
   methods: {
     onSubmit() {
-      this.$router.push({ name: 'interest' })
+      this.$http.post('/api/user/login', this.form).then(res => {
+        if (res.success) {
+          window.localStorage.setItem('userInfo', JSON.stringify(res.data))
+          this.$router.push(
+            !res.data.tags 
+              ? { name: 'interest' } 
+              : { name: 'home' }
+          )
+        }
+        console.log(res)
+      })
     }
   }
 }

@@ -4,7 +4,7 @@
     <p>加入小组，一起和小伙伴聊天吧</p>
     <div class="list">
       <div class="item" v-for="(team, index) in teams" :key="team.id">
-        <div class="left">{{team.text}}</div>
+        <div class="left">{{team.name}}</div>
         <div class="right" v-if="!team.checked" @click="clickHandle(index)">
           <van-icon name="plus" />
         </div>
@@ -27,24 +27,7 @@
 </template>
 
 <script>
-const teams = [
-  {
-    id: 1,
-    text: '小组1',
-  },
-  {
-    id: 2,
-    text: '小组2',
-  },
-  {
-    id: 3,
-    text: '小组3',
-  },
-  {
-    id: 4,
-    text: '小组4',
-  },
-]
+
 export default {
   computed: {
     checkedLength() {
@@ -56,19 +39,35 @@ export default {
   },
   data() {
     return {
-      teams: teams.map(item => {
-        item.checked = false
-        return item
-      })
+      teams: [],
     }
   },
   methods: {
     clickHandle(index) {
       this.teams[index].checked = !this.teams[index].checked
     },
+    setTeams() {
+      return this.$http.post('/api/teams/set', {
+        ids: this.checkedTeams.map(item => item.checked).join(',')
+      })
+    },
     nextStep() {
-      this.$router.replace({ name: 'home' })
+      return (
+        this.checkedTeams.length 
+          ? this.setTeams() 
+          : Promise.resolve()
+      ).then(() => {
+        this.$router.replace({ name: 'home' })
+      })
     }
+  },
+  created() {
+    this.$http.get('/api/teams').then(({ data }) => {
+      this.teams = data.map(item => {
+        item.checked = false
+        return item
+      })
+    })
   }
 }
 </script>
