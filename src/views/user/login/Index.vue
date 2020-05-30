@@ -50,8 +50,9 @@ export default {
               ? { name: 'interest' } 
               : { name: 'home' }
           )
+        } else {
+          alert(res.msg)
         }
-        console.log(res)
       })
     }
   }

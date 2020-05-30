@@ -51,6 +51,11 @@ export const constantRouterMap = [
         name: 'mine',
         component: () => import(/* webpackChunkName: "home" */ '@/views/mine/Index')
       },
+      {
+        path: '/detail',
+        name: 'detail',
+        component: () => import(/* webpackChunkName: "home" */ '@/views/detail/index')
+      },
     ]
   }
 
@@ -70,7 +75,7 @@ const router = new Router({
 
 const paths = [
   '/user/login',
-  '/user/register'
+  '/user/sign'
 ]
 
 router.beforeEach(async (to, from, next) => {

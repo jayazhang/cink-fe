@@ -2,38 +2,76 @@
   <div class="home">
     <van-search v-model="value" placeholder="请输入搜索关键词" />
 
-    <div class="list">
-      <div class="item" v-for="item in list" :key="item.title">
+    <van-list
+      class="list"
+      v-model="loading"
+      :finished="finished"
+      finished-text="没有更多了"
+      @load="onLoad"
+    >
+      <div class="item" v-for="item in list" :key="item.id" @click="goDetail(item)">
         <div class="wrap">
-          <div class="img">
-            <img :src="item.img" />
+          <div class="img" v-if="item.poster">
+            <img :src="item.poster" />
             <div class="title">{{item.title}}</div>
           </div>
           <div class="info">
+            <div class="title" v-if="!item.poster">{{item.title}}</div>
             <div class="auth">{{item.auth}}</div>
             <div class="desc">
               {{item.intro}}
             </div>
             <div class="others">
-              <div class="tag">#演讲</div>
-              <div class="date">2020/5/12</div>
+              <div class="tag">#{{item.tagName}}</div>
+              <div class="date">{{item.createTime}}</div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </van-list>
   </div>
 </template>
 
 <script>
-import { list } from './config'
+// import { list } from './config'
 
 export default {
   data() {
     return {
-      list,
-      value: ''
+      loading: false,
+      finished: false,
+      list: [],
+      value: '',
+      offset: 0,
+      limit: 5
     }
+  },
+  methods: {
+    goDetail(item) {
+      this.$router.push({
+        name: 'detail',
+        query: {
+          id: item.id
+        }
+      });
+    },
+    onLoad() {
+      this.loading = true;
+      this.$http.get('/api/news/list', {
+        params: {
+          limit: this.limit,
+          offset: this.offset
+        }
+      })
+      .then(res => {
+        this.list = this.list.concat(res.data ? res.data : []);
+        this.loading = false;
+        this.offset += this.limit;
+        if (!res.data || res.data.length === 0) {
+          this.finished = true;
+        }
+      })
+    },
   }
 }
 </script>
