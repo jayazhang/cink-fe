@@ -23,6 +23,7 @@ export default {
       }
     })
     .then(res => {
+      res.data.content = res.data.content.split('\n').join('<br/>');
       this.detail = res.data;
       console.log(res)
     })
@@ -32,7 +33,7 @@ export default {
 
 <style scoped lang="less">
 .detail {
-  padding: 20px 24px;
+  padding: 20px 24px 100px;
 
   h1 {
     font-size: 40px;

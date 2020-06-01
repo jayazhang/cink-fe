@@ -4,6 +4,7 @@ import Vant from 'vant'
 import 'vant/lib/index.css'
 import router from './router'
 import $http from './request'
+import './store'
 
 Vue.prototype.$http = $http
 Vue.use(Vant)

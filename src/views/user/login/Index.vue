@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <h2>请使用账号密码登录</h2>
-    <van-form @submit="onSubmit">
+    <van-form>
       <van-field
         v-model="form.username"
         name="username"
@@ -18,7 +18,7 @@
         :rules="[{ required: true, message: 'please input password' }]"
       />
       <div style="margin: 16px;">
-        <van-button round block type="info" native-type="submit">
+        <van-button @click="onSubmit" round block type="info">
           Sign in
         </van-button>
       </div>
@@ -31,6 +31,8 @@
 </template>
 
 <script>
+import store from '../../../store';
+
 export default {
   data() {
     return {
@@ -44,7 +46,8 @@ export default {
     onSubmit() {
       this.$http.post('/api/user/login', this.form).then(res => {
         if (res.success) {
-          window.localStorage.setItem('userInfo', JSON.stringify(res.data))
+          window.localStorage.setItem('userInfo', JSON.stringify(res.data));
+          store.setUserInfo(res.data);
           this.$router.push(
             !res.data.tags 
               ? { name: 'interest' } 

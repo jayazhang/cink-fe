@@ -34,7 +34,7 @@ export default {
       return this.teams.filter(item => item.checked).length
     },
     checkedTeams() {
-      return this.teams.filter(item => item.checked).map(item => item.text).join(',')
+      return this.teams.filter(item => item.checked).map(item => item.name).join(',')
     }
   },
   data() {
@@ -48,7 +48,13 @@ export default {
     },
     setTeams() {
       return this.$http.post('/api/teams/set', {
-        ids: this.checkedTeams.map(item => item.checked).join(',')
+        ids: this.teams.filter(item => item.checked).map(item => item.id).join(',')
+      }).then(() => {
+        return this.$http.get('/api/user/isLogin').then(res => {
+          if (res.data && res.data.isLogin) {
+            window.localStorage.setItem('userInfo', JSON.stringify(res.data.userInfo))
+          }
+        });
       })
     },
     nextStep() {

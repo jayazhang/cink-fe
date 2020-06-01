@@ -27,8 +27,13 @@ export const constantRouterMap = [
       {
         path: 'team',
         name: 'team',
-        component: () => import(/* webpackChunkName: "interest" */ '@/views/user/team/Index')
+        component: () => import(/* webpackChunkName: "team" */ '@/views/user/team/Index')
       },
+      {
+        path: 'room',
+        name: 'room',
+        component: () => import(/* webpackChunkName: "team" */ '@/views/room/index')
+      }
     ]
   },
 
