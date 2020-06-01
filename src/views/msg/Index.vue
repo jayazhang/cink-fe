@@ -33,17 +33,18 @@ export default {
     }
   },
   created() {
-    this.getRoom();
     this.$http.get('/api/user/isLogin').then(res => {
+      console.log(res)
       if (res.data && res.data.isLogin) {
-        this.userInfo = res.data;
+        console.log(res.data)
+        this.userInfo = res.data.userInfo;
         this.getRoom();
       }
     });
   },
   methods: {
     getRoom() {
-      const teams = this.userInfo.teams.split(',').map(item => +item);
+      const teams = this.userInfo.teams ? this.userInfo.teams.split(',').map(item => +item) : [];
       this.$http.get('/api/teams').then(({ data }) => {
         this.roomList = data.filter(item => {
           return teams.indexOf(item.id) > -1
