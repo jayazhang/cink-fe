@@ -63,7 +63,7 @@ export default {
           ? this.setTeams() 
           : Promise.resolve()
       ).then(() => {
-        this.$router.replace({ name: 'home' })
+        this.$router.replace({ name: 'msg' })
       })
     }
   },
