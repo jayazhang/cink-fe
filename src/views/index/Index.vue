@@ -48,12 +48,13 @@ export default {
   },
   methods: {
     goDetail(item) {
-      this.$router.push({
-        name: 'detail',
-        query: {
-          id: item.id
-        }
-      });
+      window.open('/detail?id=' + item.id);
+      // this.$router.push({
+      //   name: 'detail',
+      //   query: {
+      //     id: item.id
+      //   }
+      // });
     },
     onLoad() {
       this.loading = true;

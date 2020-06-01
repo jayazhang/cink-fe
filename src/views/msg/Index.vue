@@ -28,16 +28,18 @@ export default {
   data() {
     return {
       roomList: [],
-      msgRoomMap: store.msgRoomMap
-    }
-  },
-  computed: {
-    userInfo() {
-      return store.userInfo;
+      msgRoomMap: store.msgRoomMap,
+      userInfo: store.userInfo,
     }
   },
   created() {
     this.getRoom();
+    this.$http.get('/api/user/isLogin').then(res => {
+      if (res.data && res.data.isLogin) {
+        this.userInfo = res.data;
+        this.getRoom();
+      }
+    });
   },
   methods: {
     getRoom() {
