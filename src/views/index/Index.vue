@@ -49,12 +49,6 @@ export default {
   methods: {
     goDetail(item) {
       window.open('/detail?id=' + item.id);
-      // this.$router.push({
-      //   name: 'detail',
-      //   query: {
-      //     id: item.id
-      //   }
-      // });
     },
     onLoad() {
       this.loading = true;
@@ -87,6 +81,7 @@ export default {
       margin-bottom: 15px;
       padding: 15px 30px;
       background: #fff;
+      font-size: 30px;
 
       .wrap {
         border: 1px solid #d1d1d1;
@@ -119,13 +114,11 @@ export default {
       .desc {
         margin-bottom: 12px;
         color: #999;
-        font-size: 10px;
+        font-size: 28px;
       }
       .others {
         display: flex;
         justify-content: space-between;
-        .tag {}
-        .date {}
       }
     }
   }
