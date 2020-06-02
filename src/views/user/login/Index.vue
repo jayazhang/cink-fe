@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <h2>请使用账号密码登录</h2>
+    <h2>로그인</h2>
     <van-form>
       <van-field
         v-model="form.username"

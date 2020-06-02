@@ -1,6 +1,6 @@
 <template>
   <div class="sign">
-    <h2>请注册账号密码</h2>
+    <h2>회원 가입</h2>
     <van-form>
       <van-field
         v-model="form.username"

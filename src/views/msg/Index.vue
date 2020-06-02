@@ -1,7 +1,7 @@
 <template>
   <div class="msg">
     <van-nav-bar
-      title="消息列表"
+      title="메시지 목록"
     />
     <div class="list" v-if="userInfo.teams">
       <div class="room" @click="goRoom(room)" v-for="room in roomList" :key="room.id">

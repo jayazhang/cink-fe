@@ -18,8 +18,8 @@
     </div>
 
     <van-cell-group title="社交功能" @click="alert('暂未开放')">
-      <van-cell title="我的评论" value="评论" icon="location-o" />
-      <van-cell title="我的文章" value="文章" icon="location-o" />
+      <van-cell title="닷글단 글" value="닷글" icon="location-o" />
+      <van-cell title="작성글" value="글" icon="location-o" />
     </van-cell-group>
 
     <!-- <van-cell-group title="其他功能" @click="alert('暂未开放')">

@@ -21,17 +21,17 @@ export default {
     return {
       menuList: [
         {
-          text: '首页',
+          text: '홈',
           icon: 'home-o',
           name: 'home'
         },
         {
-          text: '消息',
+          text: '취미방',
           icon: 'comment-o',
           name: 'msg'
         },
         {
-          text: '我的',
+          text: '마이',
           icon: 'friends-o',
           name: 'mine'
         },

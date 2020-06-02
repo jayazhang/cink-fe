@@ -1,7 +1,7 @@
 <template>
   <div class="team">
-    <h2>选择你感兴趣的小组</h2>
-    <p>加入小组，一起和小伙伴聊天吧</p>
+    <h2>관심 있는 그룹을 선택 하세요</h2>
+    <p>모임에 가입 하여 함께 이야기 합 시다</p>
     <div class="list">
       <div class="item" v-for="(team, index) in teams" :key="team.id">
         <div class="left">{{team.name}}</div>
@@ -17,11 +17,11 @@
       :disabled="checkedLength < 1"
       @click="nextStep"
     >
-      <span>{{checkedTeams && `加入${checkedTeams}` || '完成'}}</span>
+      <span>{{checkedTeams && `가입 ${checkedTeams}` || '완성'}}</span>
     </van-button>
 
     <div class="skip" @click="nextStep">
-      <span>跳过</span>
+      <span>pass</span>
     </div>
   </div>
 </template>

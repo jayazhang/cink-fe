@@ -1,7 +1,7 @@
 <template>
   <div class="interest">
-    <h2>选择感兴趣的内容</h2>
-    <p>根据兴趣，生成私人的信息流</p>
+    <h2>관심 있는 내용 선택해주세요</h2>
+    <p>흥미에 따라 개인의 정보 흐름을 생성합니다</p>
     <div class="list">
       <van-row gutter="20">
         <van-col 
@@ -28,8 +28,8 @@
       :disabled="checkedLength < 2"
       @click="nextStep"
     >
-      <span v-if="checkedLength < 2">至少关注2个兴趣</span>
-      <span v-else>下一步</span>
+      <span v-if="checkedLength < 2">최소 2개이상 선택해 주세요</span>
+      <span v-else>다음</span>
     </van-button>
   </div>
 </template>
