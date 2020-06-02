@@ -1,7 +1,7 @@
 <template>
   <div class="mine">
     <van-nav-bar
-      title="我的"
+      title="마이"
     />
 
     <div class="avatar" v-if="isLogin">
@@ -17,7 +17,7 @@
       <van-button @click="login">请登录 / 注册</van-button>
     </div>
 
-    <van-cell-group title="社交功能" @click="alert('暂未开放')">
+    <van-cell-group title="활동" @click="alert('暂未开放')">
       <van-cell title="닷글단 글" value="닷글" icon="location-o" />
       <van-cell title="작성글" value="글" icon="location-o" />
     </van-cell-group>

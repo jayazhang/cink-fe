@@ -12,7 +12,7 @@
     </div>
     <div class="input">
       <textarea v-model="msg" />
-      <van-button @click="send">发送</van-button>
+      <van-button @click="send">SEND</van-button>
     </div>
   </div>
 </template>
