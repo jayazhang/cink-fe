@@ -2,7 +2,11 @@
   <div class="msg">
     <van-nav-bar
       title="메시지 목록"
-    />
+    >
+      <template #right>
+        <van-icon @click="showActions = true" name="add" size="18" />
+      </template>
+    </van-nav-bar>
     <div class="list" v-if="userInfo.teams">
       <div class="room" @click="goRoom(room)" v-for="room in roomList" :key="room.id">
         <div class="name">{{room.name}}</div>
@@ -18,6 +22,30 @@
     <div class="no-msg" v-if="!userInfo.teams">
       <van-button class="add" @click="join">选择一个你感兴趣的小组加入吧</van-button>
     </div>
+
+    <van-action-sheet v-model="showActions" :actions="actions" @select="onSelect" />
+
+    <van-dialog 
+      v-model="showCreate" 
+      @confirm="confirmCreateGroup" 
+      title="create a group" 
+      show-cancel-button
+      confirm-button-text="OK"
+      cancel-button-text="cancel"
+    >
+      <input class="group-input" v-model="createGroupValue" placeholder="please input group name" />
+    </van-dialog>
+
+    <van-dialog 
+      v-model="showJoin" 
+      title="join a group" 
+      show-cancel-button
+      confirm-button-text="OK"
+      cancel-button-text="cancel"
+      @confirm="confirmJoinGroup"
+    >
+      <input class="group-input" v-model="joinGroupValue" placeholder="please input group name" />
+    </van-dialog>
   </div>
 </template>
 
@@ -27,7 +55,22 @@ import store from '../../store';
 export default {
   data() {
     return {
+      joinGroupValue: '',
+      createGroupValue: '',
+      showCreate: false,
+      showJoin: false,
+      showActions: false,
       roomList: [],
+      actions: [
+        {
+          name: 'create a group',
+          id: 1
+        },
+        {
+          name: 'join a group',
+          id: 2
+        }
+      ],
       msgRoomMap: store.msgRoomMap,
       userInfo: store.userInfo,
     }
@@ -56,12 +99,60 @@ export default {
     },
     join() {
       this.$router.push({ name: 'team' });
+    },
+    createRoom() {
+      this.showCreate = true;
+    },
+    joinRoom() {
+      this.showJoin = true;
+    },
+    onSelect(item) {
+      switch (item.id) {
+        case 1:
+          this.createRoom();
+          break;
+        case 2:
+          this.joinRoom();
+          break;
+      }
+    },
+    confirmCreateGroup() {
+      this.$http.post('/api/teams/add', {
+        name: this.createGroupValue
+      })
+      .then(res => {
+        this.roomList = res.data;
+        this.createGroupValue = '';
+        this.showActions = false;
+      }, err => {
+        alert(err.msg);
+      })
+    },
+    confirmJoinGroup() {
+      this.$http.post('/api/teams/join', {
+        name: this.joinGroupValue
+      })
+      .then(res => {
+        this.roomList = res.data;
+        this.joinGroupValue = '';
+        this.showActions = false;
+      }, err => {
+        alert(err.msg);
+      })
     }
   }
 }
 </script>
 
 <style scoped lang="less">
+.group-input {
+  height: 70px;
+  margin: 40px;
+  border: 1px solid #e1e1e1;
+  border-radius: 15px;
+  width: 450px;
+  padding-left: 30px;
+}
 .room {
   position: relative;
   padding: 12px 24px;
