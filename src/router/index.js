@@ -33,7 +33,17 @@ export const constantRouterMap = [
         path: 'room',
         name: 'room',
         component: () => import(/* webpackChunkName: "team" */ '@/views/room/index')
-      }
+      },
+      {
+        path: '/detail',
+        name: 'detail',
+        component: () => import(/* webpackChunkName: "home" */ '@/views/detail/index')
+      },
+      {
+        path: '/comment',
+        name: 'comment',
+        component: () => import(/* webpackChunkName: "home" */ '@/views/mine/comment/Index')
+      },
     ]
   },
 
@@ -55,11 +65,6 @@ export const constantRouterMap = [
         path: '/mine',
         name: 'mine',
         component: () => import(/* webpackChunkName: "home" */ '@/views/mine/Index')
-      },
-      {
-        path: '/detail',
-        name: 'detail',
-        component: () => import(/* webpackChunkName: "home" */ '@/views/detail/index')
       },
     ]
   }

@@ -17,9 +17,9 @@
       <van-button @click="login">请登录 / 注册</van-button>
     </div>
 
-    <van-cell-group title="활동" @click="alert('暂未开放')">
-      <van-cell title="닷글단 글" value="닷글" icon="location-o" />
-      <van-cell title="작성글" value="글" icon="location-o" />
+    <van-cell-group title="활동">
+      <van-cell title="닷글단 글" @click="$router.push({ name: 'comment' })" value="닷글" icon="location-o" />
+      <van-cell title="작성글" @click="alert('暂未开放')" value="글" icon="location-o" />
     </van-cell-group>
 
     <!-- <van-cell-group title="其他功能" @click="alert('暂未开放')">
